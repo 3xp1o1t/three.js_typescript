@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import Stats from "three/examples/jsm/libs/stats.module";
+import { GUI } from "dat.gui";
+
 // 1er elemento - La scena es un plano 3D (X, Y, Z)
 const scene = new THREE.Scene();
 
@@ -18,7 +21,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(camera, renderer.domElement);
 
 // componentes de una forma
 const geometry = new THREE.BoxGeometry();
@@ -40,12 +43,17 @@ function onWindowResize() {
   render();
 }
 
+// Stats
+const stats = new Stats();
+document.body.appendChild(stats.dom);
+
 function animate() {
   requestAnimationFrame(animate);
 
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
 
+  stats.update();
   render();
 }
 
